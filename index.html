@@ -24,15 +24,127 @@ https://github.com/Team-Code/KA_Offline -->
         frameRate(30);
         
         // ProgramCodeGoesHere
-        fill(255, 255, 0);
-        ellipse(200, 200, 200, 200);
-        noFill();
-        stroke(0, 0, 0);
-        strokeWeight(2);
-        arc(200, 200, 150, 100, 0, PI);
-        fill(0, 0, 0);
-        ellipse(250, 200, 10, 10);
-        ellipse(153, 200, 10, 10);
+        var Treat = function(x,y)
+{
+    this.x = x;
+    this.y = y;
+};
+Treat.prototype.draw = function()
+{
+    fill(255, 132, 0);
+    ellipse(this.x, this.y, 5, 5);
+};
+
+var Marvin = function(config)
+{
+    this.x = config.x;
+    this.y = config.y;
+    this.size = config.size || 20;
+    this.treats = config.treats || 0;
+};
+Marvin.prototype.draw = function()
+{
+    this.y = constrain(this.y, 0 + this.size, height - this.size*0.7); 
+    
+    stroke(3, 3, 3);//tail
+    noFill();
+    strokeWeight(0.13*this.size);//tail thickness
+    arc(this.x-0.3*this.size,this.y-0.6*this.size,1.9*this.size,2.0*this.size,0,40);//tail
+    
+    strokeWeight(2);
+    fill(4, 3, 3);
+    triangle(this.x-0.25*this.size, this.y-0.7*this.size, this.x-0.25*this.size, this.y-1.0*this.size,         this.x, this.y-0.8*this.size);//ears
+    triangle(this.x+0.25*this.size, this.y-0.7*this.size, this.x+0.25*this.size, this.y-1.0*this.size,         this.x, this.y-0.8*this.size); 
+    ellipse(this.x,this.y+0.4*this.size,0.85*this.size,0.22*this.size);//feet
+    ellipse(this.x, this.y, this.size, this.size*1.1); // body
+    
+    rect(this.x-0.25*this.size,this.y-0.2*this.size,0.2*this.size,0.8*this.size,0.35*this.size);//legs
+    rect(this.x+0.05*this.size,this.y-0.2*this.size,0.2*this.size,0.8*this.size,0.35*this.size);
+    
+    ellipse(this.x, this.y-(0.6*this.size), 0.6*this.size, 0.5*this.size); // face
+    
+    fill(71, 67, 60);//eyes
+    ellipse(this.x -(0.1*this.size), this.y-0.60*this.size,0.1*this.size,0.1*this.size);
+    ellipse(this.x +0.1*this.size, this.y-0.60*this.size,0.1*this.size,0.1*this.size); 
+};
+Marvin.prototype.hop = function()
+{
+    this.y -= 5;  
+};
+Marvin.prototype.fall = function()
+{
+    this.y += 5;
+};
+Marvin.prototype.checkForTreat = function(treat)
+{
+    var betweenXs = false;
+    var betweenYs = false;
+    
+    if (treat.x >= this.x-(this.size*0.5) && treat.x <= this.x + (this.size*0.5))
+    {
+        betweenXs = true;
+        
+    }
+    if (treat.y >= this.y-(this.size*0.5) && treat.y <= this.y + (this.size*0.5))
+    {
+        betweenYs = true;
+    }
+    if(betweenXs && betweenYs)
+    {
+        treat.y-=400; 
+        this.size+=1;
+        this.treats++;
+    }
+    
+};
+ 
+var player = new Marvin({x:70,y:0,size:30});
+
+var treats = [];
+for (var i = 0; i < 40; i++)
+{
+    treats.push(new Treat(i * 40 + 300, random(20, 360)));
+} 
+
+var grassXs = [];
+for (var i = 0; i < 25; i++)
+{
+    grassXs.push(i*20);
+}
+
+draw = function() {
+    background(129, 145, 247);
+    fill(150, 68, 68); 
+    rect(-1,380,402,21);
+    
+    for (var i = 0; i < grassXs.length; i++)
+    {
+        image(getImage("cute/GrassBlock"), grassXs[i], 365, 20, 20);
+        grassXs[i]--;
+        if (grassXs[i] <= -20)
+        {
+            grassXs[i] = 400;  
+        }
+    }
+    
+    for (var i = 0; i < treats.length; i++)
+    {
+        treats[i].draw();
+        treats[i].x--;  
+        player.checkForTreat(treats[i]);
+    }
+    
+    if (keyIsPressed && key.code === 32) {
+        player.hop();
+    } else {
+        player.fall();
+    }
+    player.draw();
+    text("treats:" + player.treats, 20,20);
+    
+
+};
+
     }};
 
     // Get the canvas that Processing-js will use
