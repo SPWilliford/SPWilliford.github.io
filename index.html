@@ -134,7 +134,7 @@ draw = function() {
         player.checkForTreat(treats[i]);
     }
     
-    if (keyIsPressed && key.code === 32) {
+    if (keyPressed && key.code === 32) {
         player.hop();
     } else {
         player.fall();
