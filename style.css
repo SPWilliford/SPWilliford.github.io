@@ -1,7 +1,12 @@
 html, body {
+  background-color: coral;
   margin: 0;
   padding: 0;
 }
+h1 {
+  text-align: center;
+}
 canvas {
   display: block;
+  padding: 100px;
 }
