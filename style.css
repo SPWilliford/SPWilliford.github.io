@@ -6,14 +6,16 @@ html, body {
 }
 .header {
   background-color: rgb(255, 255, 255);
-  padding-bottom: 33px;
-  padding-top: 33px;
+  margin: 33px auto;
+  padding-bottom: 12px;
+  width: 1200px;
+  padding-top: 12px;
 }
 .title {
   font-family: 'Roboto', sans-serif;
   text-align: center;
-  font-size: 50px;
-  letter-spacing: 5px;
+  font-size: 66px;
+  letter-spacing: 12px;
   color:black;
 }
 .info {
@@ -21,12 +23,12 @@ html, body {
   text-align: center;
   font-size: 39px;
   color: black;  
-  letter-spacing: 5px;
+  letter-spacing: 12px;
 }
 canvas {
   
   margin: 0 auto;
-  background-color: white;
+  background-color: whitesmoke;
   display: block;
   
   align-items: center;
