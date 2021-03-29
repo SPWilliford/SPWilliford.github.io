@@ -19,9 +19,9 @@ html, body {
 .info {
   font-family: 'Roboto', sans-serif;
   text-align: center;
-  font-size: 30px;
+  font-size: 39px;
   color: black;  
-  letter-spacing: 3px;
+  letter-spacing: 5px;
 }
 canvas {
   
